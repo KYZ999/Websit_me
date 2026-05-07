@@ -11,9 +11,28 @@
 </head>
 <body>
 
+    <!-- ===================== ENTER SPLASH ===================== -->
+    <div id="enter-splash">
+        <canvas id="splash-canvas"></canvas>
+        <div class="splash-content">
+            <div class="splash-rings">
+                <div class="splash-ring r1"></div>
+                <div class="splash-ring r2"></div>
+                <div class="splash-ring r3"></div>
+            </div>
+            <div class="splash-logo">R<span>.</span>SYS</div>
+            <div class="splash-sub">RAVIDU GAJENDRA // DEVELOPER OS v2.0</div>
+            <button id="enter-btn">
+                <span class="enter-icon"><i class="fa-solid fa-power-off"></i></span>
+                <span class="enter-label">CLICK TO ENTER</span>
+            </button>
+            <p class="splash-note"><i class="fa-solid fa-music"></i> Background music will play on entry</p>
+        </div>
+    </div>
+
     <!-- ===================== BOOT SEQUENCE ===================== -->
     <div id="boot-screen">
-        <div class="boot-content">
+        <div class="boot-content" id="boot-content">
             <div class="boot-logo">
                 <span class="boot-r">R</span><span class="boot-dot">.</span><span class="boot-sys">SYS</span>
             </div>
@@ -21,6 +40,26 @@
             <div class="boot-progress-bar"><div class="boot-progress-fill" id="boot-fill"></div></div>
             <div class="boot-status" id="boot-status">INITIALIZING CORE SYSTEMS...</div>
         </div>
+    </div>
+
+    <!-- ===================== AUDIO ===================== -->
+    <audio id="bg-music" loop>
+        <source src="bgm.mp3" type="audio/mpeg">
+    </audio>
+    <div class="music-panel" id="music-panel">
+        <button id="music-toggle" class="music-btn" title="Mute / Unmute">
+            <i class="fa-solid fa-volume-high"></i>
+        </button>
+        <button id="vol-down" class="music-btn" title="Volume Down">
+            <i class="fa-solid fa-minus"></i>
+        </button>
+        <div class="vol-bar-track">
+            <div class="vol-bar-fill" id="vol-bar-fill"></div>
+        </div>
+        <button id="vol-up" class="music-btn" title="Volume Up">
+            <i class="fa-solid fa-plus"></i>
+        </button>
+        <span class="vol-label" id="vol-label">30%</span>
     </div>
 
     <!-- ===================== CURSOR ===================== -->
