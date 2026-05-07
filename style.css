@@ -25,15 +25,65 @@ h1, h2, h3, h4 { font-family: var(--font-sans); text-transform: uppercase; lette
 .cursor-dot {
     position: fixed; top: 0; left: 0; width: 4px; height: 4px;
     background: var(--blue-main); border-radius: 50%;
-    transform: translate(-50%, -50%); pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%); pointer-events: none; z-index: 99999;
     box-shadow: 0 0 10px var(--blue-main);
 }
 .cursor-ring {
     position: fixed; top: 0; left: 0; width: 30px; height: 30px;
     border: 1px solid var(--blue-main); border-radius: 50%;
-    transform: translate(-50%, -50%); pointer-events: none; z-index: 9998;
+    transform: translate(-50%, -50%); pointer-events: none; z-index: 99998;
     transition: width 0.2s, height 0.2s, border-color 0.2s;
 }
+
+/* ===================== ENTER SPLASH ===================== */
+#enter-splash {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: #000; z-index: 20000;
+    display: flex; justify-content: center; align-items: center;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+#splash-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
+.splash-content {
+    position: relative; z-index: 1; text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: 20px;
+}
+.splash-rings { position: relative; width: 200px; height: 200px; margin: 0 auto 20px; }
+.splash-ring {
+    position: absolute; border-radius: 50%; border: 1px solid var(--blue-main);
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+}
+.splash-ring.r1 { width: 100%; height: 100%; opacity: 0.6; animation: spin 8s linear infinite; }
+.splash-ring.r2 { width: 70%;  height: 70%;  opacity: 0.4; animation: spin-reverse 5s linear infinite; border-style: dashed; }
+.splash-ring.r3 { width: 40%;  height: 40%;  opacity: 0.8; box-shadow: 0 0 20px var(--blue-glow); animation: pulse-ring 2s ease-in-out infinite; }
+@keyframes pulse-ring { 0%,100%{transform:translate(-50%,-50%) scale(1); opacity:0.8;} 50%{transform:translate(-50%,-50%) scale(1.1); opacity:1;} }
+
+.splash-logo {
+    font-family: var(--font-mono); font-size: 3.5rem; font-weight: 800;
+    letter-spacing: 6px; color: #fff;
+}
+.splash-logo span { color: var(--blue-main); text-shadow: 0 0 20px var(--blue-glow); }
+.splash-sub {
+    font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);
+    letter-spacing: 3px; text-transform: uppercase;
+}
+#enter-btn {
+    margin-top: 30px; background: transparent;
+    border: 1px solid var(--blue-main); color: var(--text-primary);
+    padding: 20px 50px; font-family: var(--font-mono); font-size: 1rem;
+    letter-spacing: 4px; text-transform: uppercase; cursor: pointer;
+    position: relative; overflow: hidden; transition: 0.3s;
+    display: flex; align-items: center; gap: 15px;
+    animation: enter-pulse 2s ease-in-out infinite;
+}
+#enter-btn:hover { background: var(--blue-main); color: #000; box-shadow: 0 0 40px var(--blue-glow); transform: scale(1.05); animation: none; }
+@keyframes enter-pulse {
+    0%,100% { box-shadow: 0 0 10px var(--blue-glow); }
+    50%      { box-shadow: 0 0 30px var(--blue-glow), 0 0 60px rgba(0,229,255,0.2); }
+}
+.enter-icon { font-size: 1.2rem; color: var(--blue-main); }
+#enter-btn:hover .enter-icon { color: #000; }
+.splash-note { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
+.splash-note i { color: var(--blue-main); }
 
 /* Boot Screen */
 #boot-screen {
@@ -42,6 +92,7 @@ h1, h2, h3, h4 { font-family: var(--font-sans); text-transform: uppercase; lette
     justify-content: center; align-items: center; font-family: var(--font-mono);
     transition: opacity 0.8s ease, visibility 0.8s ease;
 }
+.boot-init-screen { display: flex; justify-content: center; align-items: center; height: 100%; width: 100%; }
 .boot-content { width: 80%; max-width: 600px; }
 .boot-logo { font-size: 3rem; margin-bottom: 2rem; letter-spacing: 4px; }
 .boot-r { color: #fff; } .boot-dot { color: var(--blue-main); animation: blink 1s infinite; } .boot-sys { color: var(--text-muted); font-size: 1.5rem; }
@@ -64,6 +115,44 @@ h1, h2, h3, h4 { font-family: var(--font-sans); text-transform: uppercase; lette
 }
 #matrix-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; opacity: 0.15; }
 #hero-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.4; }
+
+/* Music Panel */
+.music-panel {
+    position: fixed; bottom: 25px; right: 25px; z-index: 1001;
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(2, 2, 5, 0.8); border: 1px solid var(--blue-main);
+    padding: 10px 16px; backdrop-filter: blur(12px);
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.15);
+    font-family: var(--font-mono); transition: 0.3s;
+    animation: music-hint 2s ease-in-out infinite;
+}
+.music-panel.playing { animation: none; box-shadow: 0 0 20px rgba(0, 229, 255, 0.15); }
+.music-panel:hover { box-shadow: 0 0 30px rgba(0, 229, 255, 0.4); animation: none; }
+@keyframes music-hint {
+    0%, 100% { box-shadow: 0 0 10px rgba(0,229,255,0.1); }
+    50%       { box-shadow: 0 0 25px rgba(0,229,255,0.5); }
+}
+.music-btn {
+    background: none; border: none; color: var(--blue-main);
+    font-size: 1rem; width: 28px; height: 28px; display: flex;
+    align-items: center; justify-content: center; transition: 0.2s;
+    flex-shrink: 0;
+}
+.music-btn:hover { color: #fff; transform: scale(1.2); }
+.vol-bar-track {
+    width: 80px; height: 4px; background: rgba(255,255,255,0.1);
+    position: relative; overflow: hidden;
+}
+.vol-bar-fill {
+    height: 100%; width: 30%; background: var(--blue-main);
+    box-shadow: 0 0 8px var(--blue-glow); transition: width 0.2s ease;
+}
+.vol-label { font-size: 0.75rem; color: var(--text-muted); min-width: 30px; text-align: right; }
+
+@media (max-width: 768px) {
+    .music-panel { bottom: 15px; right: 15px; gap: 7px; padding: 8px 12px; }
+    .vol-bar-track { width: 50px; }
+}
 
 /* Side Navigation */
 .side-nav {
